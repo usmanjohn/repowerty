@@ -69,43 +69,88 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Main</div>
-                            <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Asosiy
+                            <div class="sb-sidenav-menu-heading"> Programming Skills
+                           </div>
+                            
+                            <a class="nav-link" href="{% url 'dashboard-home' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-atom text-warning"></i></div>
+                                ML&Analytics
+                            </a>
+                            <a class="nav-link" href="{% url 'skills-home' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-globe text-warning"></i></div>
+                                Web-Dev.
+                            </a>
+                            <a class="nav-link" href="{% url 'dashboard-home' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-database text-warning"></i></div>
+                                DB
+                            </a>
+                            <a class="nav-link" href="{% url 'dashboard-home' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-simple text-warning"></i></i></div>
+                                BI
                             </a>
                             
-                            <div class="sb-sidenav-menu-heading">Faoliyat</div>
+                            <div class="sb-sidenav-menu-heading"> Service</div>
                             <a class="nav-link" href="{% url 'gmat-practice-list' %}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-dollar-sign"></i></div>
-                                {% trans "GMAT/SAT/GRE" %}
+                                <div class="sb-nav-link-icon"><i class="fas fa-superscript text-warning"></i></div>
+                                GMAT/SAT/GRE
+                            </a>
+                            
+                            <a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-play text-warning"></i></div>
+                                YouTube 
                             </a>
                             <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Xodimlar
+                                <div class="sb-nav-link-icon"><i class="fas fa-blog text-warning"></i></div>
+                                Blogs
+                            </a>
+                            <div class="sb-sidenav-menu-heading"> Journey</div>
+                            <a class="nav-link" href="{% url 'journey-home' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-suitcase text-warning"></i></div>
+                                Experience
                             </a>
                             <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
-                                Hamkorlar
+                                <div class="sb-nav-link-icon"><i class="fas fa-graduation-cap text-warning"></i></div>
+                                Education
                             </a>
                             <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
-                                Yangliliklar
+                                <div class="sb-nav-link-icon"><i class="fas fa-person-running text-warning"></i></div>
+                                Practice
                             </a>
-                            <div class="sb-sidenav-menu-heading">Addons</div>
+                            <div class="sb-sidenav-menu-heading" >  Interests</div>
                             <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-handshake-angle"></i></div>
-                                Xizmatlar
+                                <div class="sb-nav-link-icon"><i class="fas fa-feather text-warning"></i></div>
+                                Poems
                             </a>
                             <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Ma'lumotlar
+                                <div class="sb-nav-link-icon"><i class="fas fa-chess-knight text-warning"></i></div>
+                                Chess
+                            </a>
+                            <a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-lightbulb text-warning"></i></div>
+                                Ideas
+                            </a>
+                            <div class="sb-sidenav-menu-heading"> Passenger</div>
+                            <a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-people-carry-box text-warning"></i></div>
+                                Soft Skills
+                            </a>
+                            <a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-language text-warning"></i></div>
+                                Languages
+                            </a>
+                            <a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-scroll text-warning"></i></div>
+                                Certificates 
+                            </a>
+                            <a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-hand-holding-dollar text-warning"></i></div>
+                                Grants 
                             </a>
                             
                             
-                            <div class="sb-sidenav-menu-heading">Organisation</div>
+                            <div class="sb-sidenav-menu-heading">Soldiers</div>
                             <a class="nav-link" href="{% url 'profile-list' %}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-phone"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-phone text-warning"></i></div>
                                 Kontakt
                             </a>
 
@@ -115,8 +160,12 @@
                     </div>
                     {% if user.is_authenticated %}
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        {{ user.username }}
+                        <div class="small btn-warning">Logged in as:</div>
+
+                        <div>
+                            <a href="{% url 'profile-page' user.username %}" class="btn btn-warning">{{ user.username }}</a>
+                        </div>
+                        
                     </div>
                     {% endif %}
                 </nav>

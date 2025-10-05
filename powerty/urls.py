@@ -11,5 +11,8 @@ urlpatterns = [
     path("", include('connector.urls')),
     path("profile/", include('profiles.urls')),
     path("gmat/", include('gmat.urls')),
+    path("dashbard/", include('dashboard.urls')),
+    path("journey/", include('journey.urls')),
+    path("skills/", include('skills.urls')),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -9,7 +9,7 @@ from django.urls import reverse
 @login_required
 def pr_question_detail(request, pk):
     question = get_object_or_404(PracitceQuestions, pk=pk)
-    return render(request, 'practice/pr_question_detail.html', {'question': question})
+    return render(request, 'gmat/pr_question_detail.html', {'question': question})
 from itertools import groupby
 from operator import itemgetter
 
@@ -56,7 +56,7 @@ def start_practice(request, pk):
         for question in questions:
             # Generate the admin URL for editing this question
             question.admin_url = reverse(
-                'admin:practice_pracitcequestions_change',  # Note: Using your model name PracitceQuestions
+                'admin:gmat_pracitcequestions_change',  # Note: Using your model name PracitceQuestions
                 args=[question.id]
             )
     

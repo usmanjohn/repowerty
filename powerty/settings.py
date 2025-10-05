@@ -26,7 +26,10 @@ INSTALLED_APPS = [
     #apps
     'connector',
     'profiles',
-    'gmat'
+    'gmat',
+    'dashboard',
+    'journey',
+    'skills',
     
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

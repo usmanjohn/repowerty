@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block content %}
+{% block exstra_css %}
 <style>
     .profile-container {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -79,19 +80,10 @@
         width: 100%;
     }
 
-    .btn-primary {
-        background: #ff8c00;
-        border: none;
-    }
-
+    
     .btn-primary:hover {
         background: #e07b00;
         transform: translateY(-2px);
-    }
-
-    .btn-info {
-        background: #17a2b8;
-        border: none;
     }
 
     .btn-info:hover {
@@ -99,12 +91,7 @@
         transform: translateY(-2px);
     }
 
-    .btn-warning {
-        background: #ffb300;
-        border: none;
-        color: white;
-    }
-
+    
     .btn-warning:hover {
         background: #e0a800;
         transform: translateY(-2px);
@@ -113,10 +100,6 @@
     @media (max-width: 768px) {
         .profile-card {
             margin: 1rem;
-        }
-
-        .card-header {
-            padding: 1.5rem;
         }
 
         .btn-custom {
@@ -129,7 +112,7 @@
         }
     }
 </style>
-
+{% endblock exstra_css %}
 <div class="profile-container">
     <div class="row justify-content-center">
         <div class="col-12">

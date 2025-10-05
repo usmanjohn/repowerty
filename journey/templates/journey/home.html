@@ -1,0 +1,292 @@
+{% extends 'connector/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .card-header {
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        color: white;
+        border-radius: 10px 10px 0 0 !important;
+    }
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #6e8efb;
+    }
+    .timeline-item {
+        position: relative;
+        margin-bottom: 20px;
+    }
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -38px;
+        top: 5px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #6e8efb;
+        border: 3px solid white;
+    }
+    .avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #6e8efb;
+    }
+    .section-title {
+        font-weight: 700;
+        color: #2c3e50;
+        border-bottom: 2px solid #6e8efb;
+        padding-bottom: 5px;
+        display: inline-block;
+    }
+    .empty-state {
+        text-align: center;
+        padding: 20px;
+        color: #7f8c8d;
+        background: #f9f9f9;
+        border-radius: 10px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col-lg-12 text-center">
+            <h1 class="display-4 mb-3">🌟 {{ user.username|title }}'s Journey</h1>
+            <p class="lead text-muted">
+                A timeline of professional experiences, education, and internships.
+            </p>
+        </div>
+    </div>
+
+    <!-- Experiences Section -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <h2 class="section-title mb-4"><i class="fas fa-briefcase me-2"></i>Professional Experiences</h2>
+            {% if experiences %}
+                <div class="timeline">
+                    {% for exp in experiences %}
+                        <div class="timeline-item mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2 text-center">
+                                            {% if exp.workplace_avatar %}
+                                                <img src="{{ exp.workplace_avatar.url }}" alt="{{ exp.workplace }}" class="avatar mb-1>
+                                            {% else %}
+                                                <div class="avatar mb-3 bg-secondary d-flex align-items-center justify-content-center text-white">
+                                                    <i class="fas fa-building fa-2x"></i>
+                                                </div>
+                                            {% endif %}
+                                            <small class="text-muted">
+                                                {{ exp.start_date|date:"M Y" }} – {% if exp.end_date %}{{ exp.end_date|date:"M Y" }}{% else %}Present{% endif %}
+                                            </small>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <h4 class="card-title">
+                                                {{ exp.position|default:"Position Not Specified" }}
+                                                {% if exp.workplace_link %}
+                                                    <a href="{{ exp.workplace_link }}" target="_blank" class="ms-2"><i class="fas fa-external-link-alt"></i></a>
+                                                {% endif %}
+                                            </h4>
+                                            <h6 class="card-subtitle mb-2 text-muted">{{ exp.workplace|default:"Workplace Not Specified" }}</h6>
+                                            <p class="card-text">
+                                                <i class="fas fa-map-marker-alt me-2"></i>
+                                                {{ exp.city|default:"City Not Specified" }}, {{ exp.country|default:"Country Not Specified" }}
+                                                {% if exp.branch or exp.department %}
+                                                    &nbsp;|&nbsp;
+                                                    {% if exp.branch %}<span class="badge bg-info">{{ exp.branch }}</span>{% endif %}
+                                                    {% if exp.department %}<span class="badge bg-primary">{{ exp.department }}</span>{% endif %}
+                                                {% endif %}
+                                            </p>
+                                            {% if exp.responsibility %}
+                                                <p><strong>Responsibilities:</strong> {{ exp.responsibility }}</p>
+                                            {% endif %}
+                                            {% if exp.skills.all %}
+                                            <strong>Skills:</strong>
+                                                    
+                                        {% for skill in exp.skills.all %}
+                                                
+                                                    
+                                                        <span class="badge bg-warning text-dark">{{ skill.name }}</span>
+                                                    
+                                                {% endfor %}
+                                            {% endif %}
+                                            {% if exp.achievements %}
+                                                <p><strong>Achievements:</strong> {{ exp.achievements }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-briefcase fa-3x mb-3"></i>
+                    <h4>No professional experiences yet.</h4>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Education Section -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <h2 class="section-title mb-4"><i class="fas fa-graduation-cap me-2"></i>Education</h2>
+            {% if educations %}
+                <div class="timeline">
+                    {% for edu in educations %}
+                        <div class="timeline-item mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2 text-center">
+                                            {% if edu.institute_avatar %}
+                                                <img src="{{ edu.institute_avatar.url }}" alt="{{ edu.institute }}" class="avatar mb-3">
+                                            {% else %}
+                                                <div class="avatar mb-3 bg-secondary d-flex align-items-center justify-content-center text-white">
+                                                    <i class="fas fa-university fa-2x"></i>
+                                                </div>
+                                            {% endif %}
+                                            <small class="text-muted">
+                                                {{ edu.start_date|date:"M Y" }} – {% if edu.end_date %}{{ edu.end_date|date:"M Y" }}{% else %}Present{% endif %}
+                                            </small>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <h4 class="card-title">
+                                                {{ edu.major|default:"Major Not Specified" }}
+                                                {% if edu.institute_link %}
+                                                    <a href="{{ edu.institute_link }}" target="_blank" class="ms-2"><i class="fas fa-external-link-alt"></i></a>
+                                                {% endif %}
+                                            </h4>
+                                            <h6 class="card-subtitle mb-2 text-muted">{{ edu.institute|default:"Institute Not Specified" }}</h6>
+                                            <p class="card-text">
+                                                <i class="fas fa-map-marker-alt me-2"></i>
+                                                {{ edu.city|default:"City Not Specified" }}, {{ edu.country|default:"Country Not Specified" }}
+                                                {% if edu.level %}&nbsp;|&nbsp;<span class="badge bg-success">{{ edu.level }}</span>{% endif %}
+                                            </p>
+                                            {% if edu.gpa and edu.max_gpa %}
+                                                <p><strong>GPA:</strong> {{ edu.gpa }}/{{ edu.max_gpa }}</p>
+                                            {% endif %}
+                                            {% if edu.skills.all %}
+                                                <p>
+                                                    <strong>Skills:</strong>
+                                                    {% for skill in edu.skills.all %}
+                                                        <span class="badge bg-warning text-dark">{{ skill }}</span>
+                                                    {% endfor %}
+                                                </p>
+                                            {% endif %}
+                                            {% if edu.projects %}
+                                                <p><strong>Projects:</strong> {{ edu.projects }}</p>
+                                            {% endif %}
+                                            {% if edu.achievements %}
+                                                <p><strong>Achievements:</strong> {{ edu.achievements }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-graduation-cap fa-3x mb-3"></i>
+                    <h4>No education history yet.</h4>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Internships Section -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <h2 class="section-title mb-4"><i class="fas fa-user-tie me-2"></i>Internships</h2>
+            {% if internships %}
+                <div class="timeline">
+                    {% for intern in internships %}
+                        <div class="timeline-item mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2 text-center">
+                                            {% if intern.internship_avatar %}
+                                                <img src="{{ intern.internship_avatar.url }}" alt="{{ intern.organization }}" class="avatar mb-3">
+                                            {% else %}
+                                                <div class="avatar mb-3 bg-secondary d-flex align-items-center justify-content-center text-white">
+                                                    <i class="fas fa-briefcase fa-2x"></i>
+                                                </div>
+                                            {% endif %}
+                                            <small class="text-muted">
+                                                {{ intern.start_date|date:"M Y" }} – {% if intern.end_date %}{{ intern.end_date|date:"M Y" }}{% else %}Present{% endif %}
+                                            </small>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <h4 class="card-title">
+                                                {{ intern.position|default:"Position Not Specified" }}
+                                                {% if intern.organization_link %}
+                                                    <a href="{{ intern.organization_link }}" target="_blank" class="ms-2"><i class="fas fa-external-link-alt"></i></a>
+                                                {% endif %}
+                                            </h4>
+                                            <h6 class="card-subtitle mb-2 text-muted">{{ intern.organization|default:"Organization Not Specified" }}</h6>
+                                            <p class="card-text">
+                                                <i class="fas fa-map-marker-alt me-2"></i>
+                                                {{ intern.city|default:"City Not Specified" }}, {{ intern.country|default:"Country Not Specified" }}
+                                                {% if intern.branch or intern.department %}
+                                                    &nbsp;|&nbsp;
+                                                    {% if intern.branch %}<span class="badge bg-info">{{ intern.branch }}</span>{% endif %}
+                                                    {% if intern.department %}<span class="badge bg-primary">{{ intern.department }}</span>{% endif %}
+                                                {% endif %}
+                                            </p>
+                                            {% if intern.responsibility %}
+                                                <p><strong>Responsibilities:</strong> {{ intern.responsibility }}</p>
+                                            {% endif %}
+                                            {% if intern.skills.all %}
+                                                <p>
+                                                    <strong>Skills:</strong>
+                                                    {% for skill in intern.skills.all %}
+                                                        <span class="badge bg-warning text-dark">{{ skill }}</span>
+                                                    {% endfor %}
+                                                </p>
+                                            {% endif %}
+                                            {% if intern.achievements %}
+                                                <p><strong>Achievements:</strong> {{ intern.achievements }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-user-tie fa-3x mb-3"></i>
+                    <h4>No internships yet.</h4>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
